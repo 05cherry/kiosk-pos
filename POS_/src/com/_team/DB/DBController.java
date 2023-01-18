@@ -10,7 +10,7 @@ public class DBController extends Thread {
 	public final int WAITING = -1;
 	public final int INSERT = 0;
 	public final int UPDATE = 1;
-//	public final int SELECT = 2; //ë©”ì†Œë“œë¥¼ ë§Œë“¤ì§€ ì•Šì•„ì„œ ì‚¬ìš© ë¶ˆê°€ëŠ¥
+//	public final int SELECT = 2; //¸Ş¼Òµå¸¦ ¸¸µéÁö ¾Ê¾Æ¼­ »ç¿ë ºÒ°¡´É
 	public final int DELETE = 3;
 	public int stateCash;
 	public int stateCategory;
@@ -52,8 +52,8 @@ public class DBController extends Thread {
 		try {
 			while (true) {
 				sleep(100);
-				// TODO í•˜ë£¨ê°€ ì§€ë‚  ë•Œ ë§ˆë‹¤ ìŠ¤íƒ¯íŒ¨ë„ ê°±ì‹ 
-				//DB INSERT, UPDATE, SELECT, DELETE ì‚¬í•­ ì²´í¬ í›„ ì‹¤í–‰
+				// TODO ÇÏ·ç°¡ Áö³¯ ¶§ ¸¶´Ù ½ºÅÈÆĞ³Î °»½Å
+				//DB INSERT, UPDATE, SELECT, DELETE »çÇ× Ã¼Å© ÈÄ ½ÇÇà
 				if(stateCash != WAITING) {
 					doCRUDCash();
 					POS.updateCashs();
@@ -72,7 +72,7 @@ public class DBController extends Thread {
 					POS.updateProducts();
 					Main.win.orderStockPanel.menuPanel.loadTable();
 				}
-				// ìˆœì„œ ì¤‘ìš”!! ReceiptNumber > OrderEachs > OrderMain > Customer
+				// ¼ø¼­ Áß¿ä!! ReceiptNumber > OrderEachs > OrderMain > Customer
 				if(stateReceiptNumber != WAITING) {
 					doCRUDReceiptNumber();
 				}
@@ -88,10 +88,10 @@ public class DBController extends Thread {
 					Main.win.clientPanel.loadTable();
 				}
 				
-				//ì£¼ë¬¸ ë³€ê²½ë˜ë©´ ì˜¤ë”íŒ¨ë„ ê°±ì‹ 
-				//ì£¼ë¬¸ì´ ë³€ê²½ë˜ì—ˆëŠ”ì§€ í™•ì¸
+				//ÁÖ¹® º¯°æµÇ¸é ¿À´õÆĞ³Î °»½Å
+				//ÁÖ¹®ÀÌ º¯°æµÇ¾ú´ÂÁö È®ÀÎ
 				if (isUpdateOrderPanel()) {
-					//ì˜¤ë”íŒ¨ë„ ê°±ì‹ 
+					//¿À´õÆĞ³Î °»½Å
 					previousReceiptNumbers = POS.receiptNumbers;
 					POS.updateOrderMains();
 					POS.updateOrderEachs();
@@ -104,7 +104,7 @@ public class DBController extends Thread {
 					 * else { System.out.println("WAITING OrderPanel WAITING"); }
 					 */
 					
-				//POSì°½ êº¼ì¡Œìœ¼ë©´ DBController ì¢…ë£Œ
+				//POSÃ¢ ²¨Á³À¸¸é DBController Á¾·á
 				if (Main.win.isShowing());
 //					System.out.println("POS alive");
 				else {
@@ -135,12 +135,12 @@ public class DBController extends Thread {
 
 	public void openDb() {
 		try {
-			// #1. DBì—°ê²°
+			// #1. DB¿¬°á
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://javacafe2022.ciuztmb4byzu.ap-northeast-2.rds.amazonaws.com:3306/cafe2022", "root", "12345678");
-			System.out.println("ë””ë¹„ ì—°ê²° ì„±ê³µ");
+			System.out.println("µğºñ ¿¬°á ¼º°ø");
 		} catch (SQLException ex) {
-			System.out.println("ë””ë¹„ ì—°ê²° ì‹¤íŒ¨");
+			System.out.println("µğºñ ¿¬°á ½ÇÆĞ");
 			System.out.println("SQLException : " + ex.getMessage());
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
@@ -151,13 +151,13 @@ public class DBController extends Thread {
 
 		try {
 			if (ptmt != null)
-				ptmt.close(); // DBë‹«ì•„!
+				ptmt.close(); // DB´İ¾Æ!
 			if (conn != null)
-				conn.close(); // ì—°ê²°í•´ì œí•´!
-			System.out.println("ë””ë¹„ ë‹«ê¸° ì„±ê³µ");
+				conn.close(); // ¿¬°áÇØÁ¦ÇØ!
+			System.out.println("µğºñ ´İ±â ¼º°ø");
 
 		} catch (Exception e) {
-			System.out.println("ë””ë¹„ ë‹«ê¸° ì‹¤íŒ¨");
+			System.out.println("µğºñ ´İ±â ½ÇÆĞ");
 		}
 	}
 
@@ -190,12 +190,12 @@ public class DBController extends Thread {
 
 	public void deleteData(String selectedData, String tableName) {
 		try {
-			// sql ì§ˆì˜ì–´ ì‹¤í–‰
+			// sql ÁúÀÇ¾î ½ÇÇà
 			ptmt = conn.prepareStatement("DELETE FROM " + tableName + " WHERE code = ?;");
 			ptmt.setInt(1, Integer.parseInt(selectedData));
 			ptmt.executeUpdate();
-			// ì‚½ì… ì˜ ë˜ì—ˆëŠ”ì§€ í™•ì¸
-			System.out.println("ë°ì´í„° ì‚­ì œ ì™„ë£Œ");
+			// »ğÀÔ Àß µÇ¾ú´ÂÁö È®ÀÎ
+			System.out.println("µ¥ÀÌÅÍ »èÁ¦ ¿Ï·á");
 		} catch (SQLException e1) {
 			System.out.println("SQLException : " + e1.getMessage());
 		} catch (NumberFormatException e2) {
@@ -205,11 +205,11 @@ public class DBController extends Thread {
 	
 	public void delete(String strSQL) {//DELETE FROM TABLE WHERE ? = ?"
 		try {
-			// sql ì§ˆì˜ì–´ ì‹¤í–‰
+			// sql ÁúÀÇ¾î ½ÇÇà
 			ptmt = conn.prepareStatement(strSQL); 
 			ptmt.executeUpdate();
-			// ì‚½ì… ì˜ ë˜ì—ˆëŠ”ì§€ í™•ì¸
-			System.out.println("ë°ì´í„° ì‚­ì œ ì™„ë£Œ");
+			// »ğÀÔ Àß µÇ¾ú´ÂÁö È®ÀÎ
+			System.out.println("µ¥ÀÌÅÍ »èÁ¦ ¿Ï·á");
 		} catch (SQLException e1) {
 			System.out.println("SQLException : " + e1.getMessage());
 		} catch (NumberFormatException e2) {
@@ -224,7 +224,7 @@ public class DBController extends Thread {
 			for (int i = 1; i <= inputData.size(); i++) {
 				String key = keys.next();
 
-				// instanceof ìë£Œí˜• ì˜ ë³´ê¸°
+				// instanceof ÀÚ·áÇü Àß º¸±â
 				if (inputData.get(key) instanceof Integer) {
 					ptmt.setInt(i, (int) inputData.get(key));
 				} else if (inputData.get(key) instanceof String) {
@@ -238,10 +238,10 @@ public class DBController extends Thread {
 				}
 			}
 			ptmt.executeUpdate();
-			System.out.println("ë°ì´í„° ì‚½ì… ì™„ë£Œ");
+			System.out.println("µ¥ÀÌÅÍ »ğÀÔ ¿Ï·á");
 
 		} catch (SQLException e) {
-			System.out.println("ë°ì´í„° ì‚½ì… ì‹¤íŒ¨");
+			System.out.println("µ¥ÀÌÅÍ »ğÀÔ ½ÇÆĞ");
 			System.out.println("SQLException : " + e.getMessage());
 		}
 	}
@@ -252,7 +252,7 @@ public class DBController extends Thread {
 			ptmt = conn.prepareStatement("SELECT MAX(code) FROM " + tableName + ";");
 
 			res = ptmt.executeQuery();
-			res.next(); // ResultSetì€ í¬ì¸íŠ¸ëŠ” 0ì„ ê°€ë¥´í‚¤ëŠ”ë° 1ë¶€í„° ì‹œì‘í•¨ ê·¸ë˜ì„œ next()ë¡œ ì»¤ì„œë¥¼ ì˜®ê²¨ì¤˜ì•¼í•¨
+			res.next(); // ResultSetÀº Æ÷ÀÎÆ®´Â 0À» °¡¸£Å°´Âµ¥ 1ºÎÅÍ ½ÃÀÛÇÔ ±×·¡¼­ next()·Î Ä¿¼­¸¦ ¿Å°ÜÁà¾ßÇÔ
 			maxCode = String.valueOf(Integer.parseInt(res.getString(1)) + 1);
 		} catch (SQLException e) {
 			System.out.println("SQLException : " + e.getMessage());
@@ -266,14 +266,14 @@ public class DBController extends Thread {
 		Vector<Vector<String>> rowData = new Vector<Vector<String>>();
 		// Vector<String> tempRow = new Vector<>();
 		try {
-			// Statement ê°ì²´ ìƒì„±
+			// Statement °´Ã¼ »ı¼º
 			ptmt = conn.prepareStatement(strSQL);
 			ResultSet rs = ptmt.executeQuery();
 			Vector<String> tempRow;
 
 			int columnCount = rs.getMetaData().getColumnCount();
 
-			// ë ˆì½”ë“œ ê°€ì ¸ì˜¤ê¸°
+			// ·¹ÄÚµå °¡Á®¿À±â
 			while (rs.next()) {
 				tempRow = new Vector<>();
 				for (int i = 0; i < columnCount; i++) {
@@ -282,11 +282,11 @@ public class DBController extends Thread {
 				rowData.add(tempRow);
 			}
 
-			// ì‚½ì… ì˜ ë˜ì—ˆëŠ”ì§€ í™•ì¸
-//			System.out.println("í…Œì´ë¸”ì— ë°ì´í„° ë¡œë“œ ì„±ê³µ");
+			// »ğÀÔ Àß µÇ¾ú´ÂÁö È®ÀÎ
+//			System.out.println("Å×ÀÌºí¿¡ µ¥ÀÌÅÍ ·Îµå ¼º°ø");
 			rs.close();
 		} catch (SQLException ex) {
-			System.out.println("ë°ì´í„° ë¡œë“œ ì‹¤íŒ¨");
+			System.out.println("µ¥ÀÌÅÍ ·Îµå ½ÇÆĞ");
 			System.out.println("SQLException : " + ex.getMessage());
 		}
 		return rowData;
@@ -302,7 +302,7 @@ public class DBController extends Thread {
 		ArrayList<Cash> cashs = new ArrayList<Cash>();
 		Vector<Vector<String>> table = selectCashTable();
 
-		// customer ë¶ˆëŸ¬ì˜¤ê¸°
+		// customer ºÒ·¯¿À±â
 		for (int i = 0; i < table.size(); i++) {
 			cashs.add(new Cash(table.get(i)));
 		}
@@ -313,7 +313,7 @@ public class DBController extends Thread {
 		ArrayList<Category> categorys = new ArrayList<Category>();
 		Vector<Vector<String>> table = selectCategoryTable();
 
-		// Category ë¶ˆëŸ¬ì˜¤ê¸°
+		// Category ºÒ·¯¿À±â
 		for (int i = 0; i < table.size(); i++) {
 			categorys.add(new Category(table.get(i)));
 		}
@@ -324,7 +324,7 @@ public class DBController extends Thread {
 		ArrayList<Customer> customers = new ArrayList<Customer>();
 		Vector<Vector<String>> table = selectCustomerTable();
 
-		// customer ë¶ˆëŸ¬ì˜¤ê¸°
+		// customer ºÒ·¯¿À±â
 		for (int i = 0; i < table.size(); i++) {
 			customers.add(new Customer(table.get(i)));
 		}
@@ -335,7 +335,7 @@ public class DBController extends Thread {
 		ArrayList<Material> materials = new ArrayList<Material>();
 		Vector<Vector<String>> table = selectMaterialTable();
 
-		// Material ë¶ˆëŸ¬ì˜¤ê¸°
+		// Material ºÒ·¯¿À±â
 		for (int i = 0; i < table.size(); i++) {
 			materials.add(new Material(table.get(i)));
 		}
@@ -346,7 +346,7 @@ public class DBController extends Thread {
 		ArrayList<OrderEach> orderEachs = new ArrayList<OrderEach>();
 		Vector<Vector<String>> table = selectOrderEachTable();
 
-		// OrderEach ë¶ˆëŸ¬ì˜¤ê¸°
+		// OrderEach ºÒ·¯¿À±â
 		for (int i = 0; i < table.size(); i++) {
 			orderEachs.add(new OrderEach(table.get(i)));
 		}
@@ -357,7 +357,7 @@ public class DBController extends Thread {
 		ArrayList<OrderMain> orderMains = new ArrayList<OrderMain>();
 		Vector<Vector<String>> table = selectOrderMainTable();
 
-		// OrderMain ë¶ˆëŸ¬ì˜¤ê¸°
+		// OrderMain ºÒ·¯¿À±â
 		for (int i = 0; i < table.size(); i++) {
 			orderMains.add(new OrderMain(table.get(i)));
 		}
@@ -368,7 +368,7 @@ public class DBController extends Thread {
 		ArrayList<Product> products = new ArrayList<Product>();
 		Vector<Vector<String>> table = selectProductTable();
 
-		// Product ë¶ˆëŸ¬ì˜¤ê¸°
+		// Product ºÒ·¯¿À±â
 		for (int i = 0; i < table.size(); i++) {
 			products.add(new Product(table.get(i)));
 		}
@@ -379,7 +379,7 @@ public class DBController extends Thread {
 		ArrayList<ReceiptNumber> receiptNumbers = new ArrayList<ReceiptNumber>();
 		Vector<Vector<String>> table = selectReceiptNumberTable();
 
-		// ReceiptNumber ë¶ˆëŸ¬ì˜¤ê¸°
+		// ReceiptNumber ºÒ·¯¿À±â
 		for (int i = 0; i < table.size(); i++) {
 			receiptNumbers.add(new ReceiptNumber(table.get(i)));
 		}
@@ -436,7 +436,7 @@ public class DBController extends Thread {
 			data = java.sql.Timestamp.valueOf(data.toString());
 			break;
 		default:
-			System.out.println("ë°ì´í„° íƒ€ì… ì—ëŸ¬");
+			System.out.println("µ¥ÀÌÅÍ Å¸ÀÔ ¿¡·¯");
 			break;
 		}
 		return data;
@@ -444,7 +444,7 @@ public class DBController extends Thread {
 	//---------------------------------------------------------------------------------------------------CRUD
 	private boolean DBExecuteUpdate(String strSQL) {
 		try {
-			// sql ì§ˆì˜ì–´ ì‹¤í–‰
+			// sql ÁúÀÇ¾î ½ÇÇà
 			ptmt = conn.prepareStatement(strSQL); 
 			ptmt.executeUpdate();
 //			System.out.println("DBExecuteUpdate");
@@ -534,8 +534,8 @@ public class DBController extends Thread {
 		return DBExecuteUpdate(strSQL);
 	}
 	
-	//SELECT searchDataë¥¼ ì‚¬ìš©ë°”ëŒ--------------------------------------------------------------------------------
-	//PreparedStatement.executeQueryë¥¼ ì‚¬ìš©
+	//SELECT searchData¸¦ »ç¿ë¹Ù¶÷--------------------------------------------------------------------------------
+	//PreparedStatement.executeQuery¸¦ »ç¿ë
 	
 	//DELETE---------------------------------------------------------------------------------------------------
 	private boolean deleteCash(Cash cash) {
@@ -555,7 +555,7 @@ public class DBController extends Thread {
 		return DBExecuteUpdate(strSQL);
 	}
 	private boolean deleteOrderEach(OrderEach orderEach) {
-		//ê°™ì€ order_main_codeë¥¼ ê°€ì§€ê³  ìˆëŠ” order_each ë ˆì½”ë“œ ëª¨ë‘ ì‚­ì œ
+		//°°Àº order_main_code¸¦ °¡Áö°í ÀÖ´Â order_each ·¹ÄÚµå ¸ğµÎ »èÁ¦
 		String strSQL = "DELETE FROM order_each WHERE order_main_code = "+orderEach.getOrder_main_code();
 		return DBExecuteUpdate(strSQL);
 	}
