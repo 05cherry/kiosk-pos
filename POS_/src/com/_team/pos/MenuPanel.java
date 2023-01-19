@@ -15,34 +15,34 @@ public class MenuPanel extends DefaultRightPanel {
 	JTable menuTable;
 	Vector<String> tempRow = new Vector<>();
 	Vector<Vector<String>> rowData;
-	// °Ë»öµÈ °ªÀÌ ¼ıÀÚÀÎÁö ¹®ÀÚÀÎÁö È®ÀÎÇÏ±â À§ÇÑ º¯¼ö
+	// ê²€ìƒ‰ëœ ê°’ì´ ìˆ«ìì¸ì§€ ë¬¸ìì¸ì§€ í™•ì¸í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
 
 	MenuPanel() {
 		setPanel();
 		// -----------------------------------top-------------------------------------
-		String[] strOption = { "»óÇ° ÄÚµå", "»óÇ°¸í" };
+		String[] strOption = { "ìƒí’ˆ ì½”ë“œ", "ìƒí’ˆëª…" };
 		JComboBox<String> searchOption = new JComboBox<String>(strOption);
 
 		JTextField searchJTF = new JTextField(50);
-		JButton btnSearch = new JButton("°Ë»ö");
+		JButton btnSearch = new JButton("ê²€ìƒ‰");
 
 		searchOption.setBounds(56, 45, 154, 29);
 		searchJTF.setBounds(225, 45, 347, 29);
 		btnSearch.setBounds(573, 45, 59, 29);
 
-		// [°Ë»ö] ¸®½º³Ê
+		// [ê²€ìƒ‰] ë¦¬ìŠ¤ë„ˆ
 		btnSearch.addActionListener((e) -> {
 			String inputData = searchJTF.getText();
 			Object seletedCBX = searchOption.getSelectedItem();
 			if (inputData.isEmpty()) {
-				JOptionPane.showMessageDialog(this, "°Ë»öÇÒ ³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä", "»óÇ° °Ë»ö ¿À·ù", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this, "ê²€ìƒ‰í•  ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”", "ìƒí’ˆ ê²€ìƒ‰ ì˜¤ë¥˜", JOptionPane.WARNING_MESSAGE);
 				loadTable();
 				return;
 			}
 
-			if (seletedCBX.equals("»óÇ° ÄÚµå")) {
+			if (seletedCBX.equals("ìƒí’ˆ ì½”ë“œ")) {
 				strSQL = "SELECT * FROM product WHERE code LIKE '%" + inputData + "%' ;";
-			} else if (seletedCBX.equals("»óÇ°¸í")) {
+			} else if (seletedCBX.equals("ìƒí’ˆëª…")) {
 				strSQL = "SELECT * FROM product WHERE name LIKE '%" + inputData + "%' ;";
 			}
 			rowData.clear();
@@ -56,7 +56,7 @@ public class MenuPanel extends DefaultRightPanel {
 		rowData = Main.dbc.selectProductTable();
 
 		DefaultTableModel tmodel = new DefaultTableModel(rowData, title) {
-			//´õºíÅ¬¸¯ ¹æÁö
+			//ë”ë¸”í´ë¦­ ë°©ì§€
 	         public boolean isCellEditable(int i, int c){
 	                return false;
 	          }
@@ -74,9 +74,9 @@ public class MenuPanel extends DefaultRightPanel {
 		// -----------------------------------table-----------------------------------
 
 		JButton btnChange, btnAdd, btnDelete;
-		btnAdd = new JButton("µî·Ï");
-		btnChange = new JButton("¼öÁ¤");
-		btnDelete = new JButton("»èÁ¦");
+		btnAdd = new JButton("ë“±ë¡");
+		btnChange = new JButton("ìˆ˜ì •");
+		btnDelete = new JButton("ì‚­ì œ");
 		btnChange.setBounds(113, 457, 59, 29);
 		btnAdd.setBounds(39, 457, 59, 29);
 		btnDelete.setBounds(187, 457, 59, 29);
@@ -85,45 +85,45 @@ public class MenuPanel extends DefaultRightPanel {
 		addComponents(this, topPanel, centerPanel);
 
 		// LISTENER
-		// [µî·Ï]
+		// [ë“±ë¡]
 		btnAdd.addActionListener((e) -> {
-			// ------------------------------- µî·Ï UI »ı¼º -------------------------------//
+			// ------------------------------- ë“±ë¡ UI ìƒì„± -------------------------------//
 			String givenCode = Main.dbc.getMaxNum("product");
 			ArrayList<Attr> addMenuAttr = new ArrayList<Attr>();
-			addMenuAttr.add(new Attr("»óÇ° ÄÚµå", givenCode, MiniWindow.JLABEL));
-			addMenuAttr.add(new Attr("»ó Ç° ¸í", "", MiniWindow.JTEXTFIELD));
-			addMenuAttr.add(new Attr("Ä«Å× °í¸®", "Coffee ColdBrew Tea TeaVariation FruitTea Coffee", MiniWindow.JCOMBOBOX));
-			addMenuAttr.add(new Attr("»óÇ° °¡°İ", "", MiniWindow.JTEXTFIELD));
-			addMenuAttr.add(new Attr("»óÇ° ÀÌ¹ÌÁö", "", MiniWindow.IMAGEICON));
-			addMenuAttr.add(new Attr("Ç°    Àı", "", MiniWindow.YES_OR_NO));
+			addMenuAttr.add(new Attr("ìƒí’ˆ ì½”ë“œ", givenCode, MiniWindow.JLABEL));
+			addMenuAttr.add(new Attr("ìƒ í’ˆ ëª…", "", MiniWindow.JTEXTFIELD));
+			addMenuAttr.add(new Attr("ì¹´í…Œ ê³ ë¦¬", "Coffee ColdBrew Tea TeaVariation FruitTea Coffee", MiniWindow.JCOMBOBOX));
+			addMenuAttr.add(new Attr("ìƒí’ˆ ê°€ê²©", "", MiniWindow.JTEXTFIELD));
+			addMenuAttr.add(new Attr("ìƒí’ˆ ì´ë¯¸ì§€", "", MiniWindow.IMAGEICON));
+			addMenuAttr.add(new Attr("í’ˆ    ì ˆ", "", MiniWindow.YES_OR_NO));
 
-			MiniWindow addMenuPanel = new MiniWindow("»óÇ° µî·Ï", "µî·Ï", "Ãë¼Ò", addMenuAttr);
+			MiniWindow addMenuPanel = new MiniWindow("ìƒí’ˆ ë“±ë¡", "ë“±ë¡", "ì·¨ì†Œ", addMenuAttr);
 			addMenuPanel.setBounds(251 + (949 - addMenuPanel.getWidth()) / 2,
 					112 + (499 - addMenuPanel.getHeight()) / 2, addMenuPanel.getWidth(), addMenuPanel.getHeight());
 			JButton btnLeft = addMenuPanel.getBtnLeft();
 
-			// ------------------------------- µî·Ï DB ¿¬°á -------------------------------//
+			// ------------------------------- ë“±ë¡ DB ì—°ê²° -------------------------------//
 			btnLeft.addActionListener((e2) -> {
 				strSQL = "INSERT INTO product VALUES (?,?,?,?,?,?)";
-				// LinkedHashMapÀ¸·Î componentÄÃ·º¼Ç ¸¸µë(MiniWindow¿¡¼­ ÄÄÆ÷³ÍÆ® »ı¼º)
+				// LinkedHashMapìœ¼ë¡œ componentì»¬ë ‰ì…˜ ë§Œë“¬(MiniWindowì—ì„œ ì»´í¬ë„ŒíŠ¸ ìƒì„±)
 				LinkedHashMap<String, Component> comp = addMenuPanel.getComp();
 
-				//TODO À¯È¿¼º °Ë»ç Á¤±ÔÇ¥Çö½ÄÀ¸·Î ÇÏ±â!!
-				String menuName=((JTextField)comp.get("»ó Ç° ¸í")).getText();
-				String menuPrice=((JTextField) comp.get("»óÇ° °¡°İ")).getText();
-				String menuCategory = ((JComboBox<String>) comp.get("Ä«Å× °í¸®")).getSelectedItem().toString(); // key: Ä«Å× °í¸®
+				//TODO ìœ íš¨ì„± ê²€ì‚¬ ì •ê·œí‘œí˜„ì‹ìœ¼ë¡œ í•˜ê¸°!!
+				String menuName=((JTextField)comp.get("ìƒ í’ˆ ëª…")).getText();
+				String menuPrice=((JTextField) comp.get("ìƒí’ˆ ê°€ê²©")).getText();
+				String menuCategory = ((JComboBox<String>) comp.get("ì¹´í…Œ ê³ ë¦¬")).getSelectedItem().toString(); // key: ì¹´í…Œ ê³ ë¦¬
 				String menuImgSrc = addMenuPanel.getImgSrcPath();
 
 				if(menuName.equals("")||menuPrice.equals("")|| menuCategory.equals("") || menuImgSrc.equals("")) {
-					JOptionPane.showMessageDialog(this, "ÀÔ·Â Á¤º¸¸¦ ´Ù ³Ö¾îÁÖ¼¼¿ä", "ÀÔ·Â Á¤º¸ ¿À·ù", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(this, "ì…ë ¥ ì •ë³´ë¥¼ ë‹¤ ë„£ì–´ì£¼ì„¸ìš”", "ì…ë ¥ ì •ë³´ ì˜¤ë¥˜", JOptionPane.WARNING_MESSAGE);
 					return;
 				} else if (!addMenuPanel.isNumeric(menuPrice)) {
-					JOptionPane.showMessageDialog(this, "¼ıÀÚ¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä", "»óÇ° °¡°İ ¿À·ù", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(this, "ìˆ«ìë§Œ ì…ë ¥í•´ì£¼ì„¸ìš”", "ìƒí’ˆ ê°€ê²© ì˜¤ë¥˜", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 				
 				//INSERT Product
-				Product product = new Product(Integer.parseInt(givenCode),menuName,(Integer) convertCategoryCode(menuCategory),Integer.parseInt(menuPrice),menuImgSrc,(Boolean) (((JToggleButton) comp.get("Ç°    Àı")).isSelected()));
+				Product product = new Product(Integer.parseInt(givenCode),menuName,(Integer) convertCategoryCode(menuCategory),Integer.parseInt(menuPrice),menuImgSrc,(Boolean) (((JToggleButton) comp.get("í’ˆ    ì ˆ")).isSelected()));
 				Main.dbc.product = product;
 				Main.dbc.stateProduct = Main.dbc.INSERT;
 				
@@ -131,51 +131,51 @@ public class MenuPanel extends DefaultRightPanel {
 				addMenuPanel.dispose();
 			});
 		});
-		// [¼öÁ¤]
+		// [ìˆ˜ì •]
 		btnChange.addActionListener((e) -> {
 
 			int row = menuTable.getSelectedRow();
 			if (row < 0) {
-				JOptionPane.showMessageDialog(this, "¼öÁ¤ÇÒ »óÇ°À» ¼±ÅÃÇØÁÖ¼¼¿ä", "¼±ÅÃ ¼öÁ¤ ¿À·ù", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this, "ìˆ˜ì •í•  ìƒí’ˆì„ ì„ íƒí•´ì£¼ì„¸ìš”", "ì„ íƒ ìˆ˜ì • ì˜¤ë¥˜", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			// JTEXTFIELDÀÇ °ªÀ» °¡Á®¿Í¼­ °ªÀ» ³Ö¾î¾ßÇÔ.-----------------------------------
+			// JTEXTFIELDì˜ ê°’ì„ ê°€ì ¸ì™€ì„œ ê°’ì„ ë„£ì–´ì•¼í•¨.-----------------------------------
 			String[] data = new String[menuTable.getColumnCount()];
 
 			for (int i = 0; i < menuTable.getColumnCount(); i++) {
 				data[i] = (String) menuTable.getValueAt(row, i);
 			}
-			// ------------------------------- »óÇ° ¼öÁ¤Ã¢ UI »ı¼º-------------------------------//
+			// ------------------------------- ìƒí’ˆ ìˆ˜ì •ì°½ UI ìƒì„±-------------------------------//
 			ArrayList<Attr> chgMenuAttr = new ArrayList<Attr>();
-			chgMenuAttr.add(new Attr("»óÇ° ÄÚµå", data[0], MiniWindow.JLABEL));
-			chgMenuAttr.add(new Attr("»ó Ç° ¸í", data[1], MiniWindow.JTEXTFIELD));
-			chgMenuAttr.add(new Attr("Ä«Å× °í¸®", "Coffee ColdBrew Tea TeaVariation FruitTea "+data[2], MiniWindow.JCOMBOBOX));
-			chgMenuAttr.add(new Attr("»óÇ° °¡°İ", data[3], MiniWindow.JTEXTFIELD));
-			chgMenuAttr.add(new Attr("»óÇ° ÀÌ¹ÌÁö", data[4], MiniWindow.IMAGEICON));
-			chgMenuAttr.add(new Attr("Ç°    Àı", data[5], MiniWindow.YES_OR_NO));
+			chgMenuAttr.add(new Attr("ìƒí’ˆ ì½”ë“œ", data[0], MiniWindow.JLABEL));
+			chgMenuAttr.add(new Attr("ìƒ í’ˆ ëª…", data[1], MiniWindow.JTEXTFIELD));
+			chgMenuAttr.add(new Attr("ì¹´í…Œ ê³ ë¦¬", "Coffee ColdBrew Tea TeaVariation FruitTea "+data[2], MiniWindow.JCOMBOBOX));
+			chgMenuAttr.add(new Attr("ìƒí’ˆ ê°€ê²©", data[3], MiniWindow.JTEXTFIELD));
+			chgMenuAttr.add(new Attr("ìƒí’ˆ ì´ë¯¸ì§€", data[4], MiniWindow.IMAGEICON));
+			chgMenuAttr.add(new Attr("í’ˆ    ì ˆ", data[5], MiniWindow.YES_OR_NO));
 
-			MiniWindow chgMenuPanel = new MiniWindow("»óÇ° ¼öÁ¤", "¼öÁ¤", "Ãë¼Ò", chgMenuAttr);
+			MiniWindow chgMenuPanel = new MiniWindow("ìƒí’ˆ ìˆ˜ì •", "ìˆ˜ì •", "ì·¨ì†Œ", chgMenuAttr);
 			chgMenuPanel.setBounds(251 + (949 - chgMenuPanel.getWidth()) / 2,
 					112 + (499 - chgMenuPanel.getHeight()) / 2, chgMenuPanel.getWidth(), chgMenuPanel.getHeight());
 			JButton btnLeft = chgMenuPanel.getBtnLeft();
 
-			// ------------------------------- »óÇ° ¼öÁ¤Ã¢ DB¿¬°á -------------------------------//
+			// ------------------------------- ìƒí’ˆ ìˆ˜ì •ì°½ DBì—°ê²° -------------------------------//
 			btnLeft.addActionListener((e2) -> {
-				// LinkedHashMapÀ¸·Î componentÄÃ·º¼Ç ¸¸µë(MiniWindow¿¡¼­ ÄÄÆ÷³ÍÆ® »ı¼º)
+				// LinkedHashMapìœ¼ë¡œ componentì»¬ë ‰ì…˜ ë§Œë“¬(MiniWindowì—ì„œ ì»´í¬ë„ŒíŠ¸ ìƒì„±)
 				LinkedHashMap<String, Component> comp = chgMenuPanel.getComp();
 
-				String menuCode = ((JLabel) comp.get("»óÇ° ÄÚµå")).getText();
-				String menuName=((JTextField)comp.get("»ó Ç° ¸í")).getText();
-				String menuPrice=((JTextField) comp.get("»óÇ° °¡°İ")).getText();
-				String menuCategory = ((JComboBox<String>) comp.get("Ä«Å× °í¸®")).getSelectedItem().toString();
+				String menuCode = ((JLabel) comp.get("ìƒí’ˆ ì½”ë“œ")).getText();
+				String menuName=((JTextField)comp.get("ìƒ í’ˆ ëª…")).getText();
+				String menuPrice=((JTextField) comp.get("ìƒí’ˆ ê°€ê²©")).getText();
+				String menuCategory = ((JComboBox<String>) comp.get("ì¹´í…Œ ê³ ë¦¬")).getSelectedItem().toString();
 				String menuImgSrc = chgMenuPanel.getImgSrcPath();
-				Boolean menuSoldOut = ((JToggleButton) comp.get("Ç°    Àı")).isSelected();
+				Boolean menuSoldOut = ((JToggleButton) comp.get("í’ˆ    ì ˆ")).isSelected();
 
 				if(menuName.equals("")||menuPrice.equals("")) {
-					JOptionPane.showMessageDialog(this, "ÀÔ·Â Á¤º¸¸¦ ´Ù ³Ö¾îÁÖ¼¼¿ä", "ÀÔ·Â Á¤º¸ ¿À·ù", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(this, "ì…ë ¥ ì •ë³´ë¥¼ ë‹¤ ë„£ì–´ì£¼ì„¸ìš”", "ì…ë ¥ ì •ë³´ ì˜¤ë¥˜", JOptionPane.WARNING_MESSAGE);
 					return;
 				} else if (!chgMenuPanel.isNumeric(menuPrice)) {
-					JOptionPane.showMessageDialog(this, "¼ıÀÚ¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä", "»óÇ° °¡°İ ¿À·ù", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(this, "ìˆ«ìë§Œ ì…ë ¥í•´ì£¼ì„¸ìš”", "ìƒí’ˆ ê°€ê²© ì˜¤ë¥˜", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 				
@@ -191,15 +191,15 @@ public class MenuPanel extends DefaultRightPanel {
 
 		btnDelete.addActionListener((e) -> {
 			int row = menuTable.getSelectedRow();
-			// ¼±ÅÃµÈ ¿­ÀÇ index[0]ÀÇ °ª Áï ÀçÇ°ÄÚµå°ªÀ» °¡Á®¿Â´Ù.
+			// ì„ íƒëœ ì—´ì˜ index[0]ì˜ ê°’ ì¦‰ ì¬í’ˆì½”ë“œê°’ì„ ê°€ì ¸ì˜¨ë‹¤.
 			String selectedData = menuTable.getValueAt(row, 0).toString();
 			if (row < 0) {
-				JOptionPane.showMessageDialog(this, "»èÁ¦ÇÒ »óÇ°À» ¼±ÅÃÇØÁÖ¼¼¿ä", "¼±ÅÃ »èÁ¦ ¿À·ù", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this, "ì‚­ì œí•  ìƒí’ˆì„ ì„ íƒí•´ì£¼ì„¸ìš”", "ì„ íƒ ì‚­ì œ ì˜¤ë¥˜", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			int choice = JOptionPane.showConfirmDialog(this, "¼±ÅÃÇÑ »óÇ°À» »èÁ¦ ÇÏ½Ã°Ú½À´Ï±î?", "¼±ÅÃ »èÁ¦",
+			int choice = JOptionPane.showConfirmDialog(this, "ì„ íƒí•œ ìƒí’ˆì„ ì‚­ì œ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?", "ì„ íƒ ì‚­ì œ",
 					JOptionPane.OK_CANCEL_OPTION);
-			// OK == 0, cancel == 2, X(ÆË¾÷ Á¾·á) == -1
+			// OK == 0, cancel == 2, X(íŒì—… ì¢…ë£Œ) == -1
 			if (choice == 0) {
 				Product product = null;
 				for(Product p : POS.products) {
@@ -216,21 +216,21 @@ public class MenuPanel extends DefaultRightPanel {
 			}
 		});
 		
-		/**µğÀÚÀÎ ½ÃÀÛ-------------------------------**/
-		//°Ë»ö ¹öÆ° ¹è°æ»ö, ÆùÆ®»ö ÁöÁ¤
+		/**ë””ìì¸ ì‹œì‘-------------------------------**/
+		//ê²€ìƒ‰ ë²„íŠ¼ ë°°ê²½ìƒ‰, í°íŠ¸ìƒ‰ ì§€ì •
 		btnSearch = POS.buttonSetColor(btnSearch);
 		
-		//·¹ÀÌºíµé ÆùÆ® ÁöÁ¤
+		//ë ˆì´ë¸”ë“¤ í°íŠ¸ ì§€ì •
 		setFonts(new Font("", Font.BOLD, 12), searchOption, searchJTF, btnSearch);
 		
-		//»óÇ°ÄÚµå, »óÇ°¸í °Ë»öÇÏ´Â JTextField Á¤·Ä ÁöÁ¤
+		//ìƒí’ˆì½”ë“œ, ìƒí’ˆëª… ê²€ìƒ‰í•˜ëŠ” JTextField ì •ë ¬ ì§€ì •
 		searchJTF.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		//ÇÏ´ÜÀÇ µî·Ï, ¼öÁ¤, »èÁ¦ ¹öÆ° ¹è°æ»ö, ÆùÆ®»ö ÁöÁ¤
+		//í•˜ë‹¨ì˜ ë“±ë¡, ìˆ˜ì •, ì‚­ì œ ë²„íŠ¼ ë°°ê²½ìƒ‰, í°íŠ¸ìƒ‰ ì§€ì •
 		btnAdd = POS.buttonSetColor(btnAdd);
 		btnChange = POS.buttonSetColor(btnChange);
 		btnDelete = POS.buttonSetColor(btnDelete);
-		/**µğÀÚÀÎ ³¡----------------------------------**/
+		/**ë””ìì¸ ë----------------------------------**/
 	}
 
 	private int convertCategoryCode(String category) {
@@ -266,18 +266,18 @@ public class MenuPanel extends DefaultRightPanel {
 		return code;
 	}
 
-	// µ¥ÀÌÅÍº£ÀÌ½º¸¦ »õ·Î ºÒ·¯¿È
+	// ë°ì´í„°ë² ì´ìŠ¤ë¥¼ ìƒˆë¡œ ë¶ˆëŸ¬ì˜´
 	public void loadTable() {
 		rowData.clear();
 		rowData.addAll(Main.dbc.selectProductTable());
 		updateTable();
 	}
 
-	//rowdata¸¦ ¾÷µ¥ÀÌÆ®
+	//rowdataë¥¼ ì—…ë°ì´íŠ¸
 	private void updateTable() {
 		for (int i = 0; i < rowData.size(); i++) {
 			int category = Integer.parseInt(rowData.get(i).get(2));
-			String soldOut = rowData.get(i).get(5).equals("0") ? "Àç°í ÀÖÀ½" : "Àç°í ¾øÀ½";
+			String soldOut = rowData.get(i).get(5).equals("0") ? "ì¬ê³  ìˆìŒ" : "ì¬ê³  ì—†ìŒ";
 			rowData.get(i).set(2, convertCategoryCode(category));
 			rowData.get(i).set(5, soldOut);
 		}

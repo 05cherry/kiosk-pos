@@ -10,11 +10,11 @@ import java.util.regex.Pattern;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-/* ÀÛÀº Ã¢À» ¸¸µå´Â Å¬·¡½ºÀÔ´Ï´Ù. */
+/* ì‘ì€ ì°½ì„ ë§Œë“œëŠ” í´ë˜ìŠ¤ì…ë‹ˆë‹¤. */
 class MiniWindow extends JFrame {
 	//
 	private static final long serialVersionUID = -683222729602835421L;
-	// Attr°´Ã¼¸¦ ¸¸µé ¶§ ÄÄÆ÷³ÍÆ®¸¦ Ç¥½ÃÇÏ´Â final°´Ã¼
+	// Attrê°ì²´ë¥¼ ë§Œë“¤ ë•Œ ì»´í¬ë„ŒíŠ¸ë¥¼ í‘œì‹œí•˜ëŠ” finalê°ì²´
 	public static final int JLABEL = 0;
 	public static final int JTEXTFIELD = 1;
 	public static final int JBUTTON = 2;
@@ -32,8 +32,8 @@ class MiniWindow extends JFrame {
 	
 	// Constructor
 	MiniWindow(String title, String btnLeftText, String btnRightText, ArrayList<Attr> attr) {
-	/* title: ÀÛÀº Ã¢ÀÇ ¸ÇÀ§¿¡ Å¸ÀÌÆ²·Î ¾µ ¹®±¸, ¿ŞÂÊ¹öÆ°(µî·Ï, ¼öÁ¤), ¿À¸¥ÂÊ¹öÆ°(Ãë¼Ò), °¡¿îµ¥ ÆĞ³Î¿¡ µé¾î°¡´Â ÄÄÆ÷³ÍÆ® Á¤º¸ °´Ã¼*/
-		// ±âº»¼ÂÆÃ
+	/* title: ì‘ì€ ì°½ì˜ ë§¨ìœ„ì— íƒ€ì´í‹€ë¡œ ì“¸ ë¬¸êµ¬, ì™¼ìª½ë²„íŠ¼(ë“±ë¡, ìˆ˜ì •), ì˜¤ë¥¸ìª½ë²„íŠ¼(ì·¨ì†Œ), ê°€ìš´ë° íŒ¨ë„ì— ë“¤ì–´ê°€ëŠ” ì»´í¬ë„ŒíŠ¸ ì •ë³´ ê°ì²´*/
+		// ê¸°ë³¸ì…‹íŒ…
 		width = 353;
 		height = 210 + attr.size() * 42;
 		setLayout(null);
@@ -67,17 +67,17 @@ class MiniWindow extends JFrame {
 			dispose();
 		});
 		
-		/**µğÀÚÀÎ ½ÃÀÛ-------------------------------**/
-		//"»óÇ° ¼öÁ¤" ·¹ÀÌºí ÆùÆ®, Á¤·Ä ÁöÁ¤
+		/**ë””ìì¸ ì‹œì‘-------------------------------**/
+		//"ìƒí’ˆ ìˆ˜ì •" ë ˆì´ë¸” í°íŠ¸, ì •ë ¬ ì§€ì •
 		titleLabel.setFont(new Font("", Font.BOLD, 28));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		//"µî·Ï/¼öÁ¤", "Ãë¼Ò" ¹öÆ° »ö»ó, ÆùÆ® ÁöÁ¤
+		//"ë“±ë¡/ìˆ˜ì •", "ì·¨ì†Œ" ë²„íŠ¼ ìƒ‰ìƒ, í°íŠ¸ ì§€ì •
 		btnLeft = POS.buttonSetColor(btnLeft);
 		btnRight = POS.buttonSetColor(btnRight);
 		btnLeft.setFont(new Font("", Font.BOLD, 10));
 		btnRight.setFont(new Font("", Font.BOLD, 10));
-		/**µğÀÚÀÎ ³¡----------------------------------**/
+		/**ë””ìì¸ ë----------------------------------**/
 	}
 
 	
@@ -160,15 +160,15 @@ class MiniWindow extends JFrame {
 			JFileChooser fileChooser = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG", "png", "jpg", "JPG", "jpeg");
 			
-			// »çÁø ÆÄÀÏ¸¸ °¡Á®¿À°Ô
+			// ì‚¬ì§„ íŒŒì¼ë§Œ ê°€ì ¸ì˜¤ê²Œ
 			fileChooser.setFileFilter(filter);
 			
-			// ÆÄÀÏ¿ÀÇÂ ´ÙÀÌ¾ó·Î±× ¸¦ ¶ç¿ò
+			// íŒŒì¼ì˜¤í”ˆ ë‹¤ì´ì–¼ë¡œê·¸ ë¥¼ ë„ì›€
 			int result= fileChooser.showSaveDialog(this);
 			File selectedFile;
 			
 			if (result != JFileChooser.APPROVE_OPTION) {
-				JOptionPane.showMessageDialog(null, "ÆÄÀÏ ¼³Á¤À» Ãë¼ÒÇÏ¼Ì½À´Ï´Ù.", "°æ°í", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "íŒŒì¼ ì„¤ì •ì„ ì·¨ì†Œí•˜ì…¨ìŠµë‹ˆë‹¤.", "ê²½ê³ ", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
 			
@@ -177,15 +177,15 @@ class MiniWindow extends JFrame {
 				if(selectedFile.canRead()) {
 					break;
 				}
-				JOptionPane.showMessageDialog(null, "ÆÄÀÏÀ» ÀĞÀ»  ¼ö ¾ø½À´Ï´Ù.", "°æ°í", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "íŒŒì¼ì„ ì½ì„  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.", "ê²½ê³ ", JOptionPane.WARNING_MESSAGE);
 				break;
 			}
-			fileChooser.setApproveButtonText("¼±ÅÃ");
+			fileChooser.setApproveButtonText("ì„ íƒ");
 
 			if (result == JFileChooser.APPROVE_OPTION) {
 				file = new File("images\\" + selectedFile.getName());
 				originFile = selectedFile;
-				// °æ·Î Ãâ·Â
+				// ê²½ë¡œ ì¶œë ¥
 				imgSrc = file.toString();
 				System.out.println(imgSrc);
 			}
@@ -213,7 +213,7 @@ class MiniWindow extends JFrame {
 		btnY.setBounds(159, 0, 50, 30);
 		btnN.setBounds(229, 0, 50, 30);
 		
-		if(value.equals("Àç°í ÀÖÀ½"))
+		if(value.equals("ì¬ê³  ìˆìŒ"))
 			btnN.setSelected(true);
 		else
 			btnY.setSelected(true);
@@ -236,8 +236,8 @@ class MiniWindow extends JFrame {
 		String[] values = value.split(" ");
 		String[] option = new String[values.length-1];
 		
-		//valuesÀÇ ¸¶Áö¸· ¹è¿­¿ä¼Ò¸¦ Á¦¿ÜÇÑ ¹è¿­ option »ı¼º
-		//valuesÀÇ ¸¶Áö¸· ¹è¿­¿ä¼Ò´Â setSelectedItem¿¡ È°¿ë
+		//valuesì˜ ë§ˆì§€ë§‰ ë°°ì—´ìš”ì†Œë¥¼ ì œì™¸í•œ ë°°ì—´ option ìƒì„±
+		//valuesì˜ ë§ˆì§€ë§‰ ë°°ì—´ìš”ì†ŒëŠ” setSelectedItemì— í™œìš©
 	    for(int index = 0; index < values.length - 1; index++)
 	    	option[index] = values[index];
 	    
@@ -249,7 +249,7 @@ class MiniWindow extends JFrame {
 		jl.setBounds(0, 5, 106, 20);
 		jc.setBounds(107, 0, 195, 30);
 		
-		//¿É¼Ç ¼±ÅÃ
+		//ì˜µì…˜ ì„ íƒ
 		jc.setSelectedItem(values[values.length-1]);
 
 		jl.setFont(new Font("", Font.PLAIN, 20));
@@ -284,7 +284,7 @@ class MiniWindow extends JFrame {
 		try {
 			Files.copy(originFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		}catch (IOException e1) {
-			System.out.println("ÀÌ¹ÌÁö¹öÆ° ¿À·ù");
+			System.out.println("ì´ë¯¸ì§€ë²„íŠ¼ ì˜¤ë¥˜");
 			return;
 		}
 	}
@@ -297,13 +297,13 @@ class MiniWindow extends JFrame {
 		return Pattern.matches("^[0-9]*$", str);
 	}
 
-	// Àç°íÀÇ ³¯Â¥ È®ÀÎ -¿Ã¹Ù¸¥ ÀÔ·Â°ªÀÎÁö È®ÀÎ
+	// ì¬ê³ ì˜ ë‚ ì§œ í™•ì¸ -ì˜¬ë°”ë¥¸ ì…ë ¥ê°’ì¸ì§€ í™•ì¸
 	public boolean checkDate(String str) {
 		
 		try {
-			SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy-MM-dd"); // °ËÁõÇÒ ³¯Â¥ Æ÷¸Ë ¼³Á¤
-			dateFormatParser.setLenient(false); // falseÀÏ°æ¿ì Ã³¸®½Ã ÀÔ·ÂÇÑ °ªÀÌ Àß¸øµÈ Çü½ÄÀÏ ½Ã ¿À·ù°¡ ¹ß»ı - setLetient(false)¾ö°İÇÏ°Ô °Ë»ç
-			dateFormatParser.parse(str); // ´ë»ó °ª Æ÷¸Ë¿¡ Àû¿ëµÇ´ÂÁö È®ÀÎ
+			SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy-MM-dd"); // ê²€ì¦í•  ë‚ ì§œ í¬ë§· ì„¤ì •
+			dateFormatParser.setLenient(false); // falseì¼ê²½ìš° ì²˜ë¦¬ì‹œ ì…ë ¥í•œ ê°’ì´ ì˜ëª»ëœ í˜•ì‹ì¼ ì‹œ ì˜¤ë¥˜ê°€ ë°œìƒ - setLetient(false)ì—„ê²©í•˜ê²Œ ê²€ì‚¬
+			dateFormatParser.parse(str); // ëŒ€ìƒ ê°’ í¬ë§·ì— ì ìš©ë˜ëŠ”ì§€ í™•ì¸
 			return true;
 		} catch (Exception e) {
 			return false;

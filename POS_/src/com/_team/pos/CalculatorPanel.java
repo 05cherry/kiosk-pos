@@ -16,11 +16,11 @@ public class CalculatorPanel extends DefaultRightPanel {
 	private JTextField jtf;
 	private JLabel jl3;
 	public void updateCash() {
-		// ¼ıÀÚ Æ÷¸Ë ¼³Á¤
+		// ìˆ«ì í¬ë§· ì„¤ì •
 		DecimalFormat decFormat1 = new DecimalFormat("###,###");
-		// Çö±İ ÀÜ°í ºÒ·¯¿À±â
+		// í˜„ê¸ˆ ì”ê³  ë¶ˆëŸ¬ì˜¤ê¸°
 		String cash = decFormat1.format(POS.cashs.get(0).getCurrentCash());
-		jl3.setText(cash+"¿ø");
+		jl3.setText(cash+"ì›");
 		jtf.setText("");
 	}
 	public CalculatorPanel() {
@@ -29,7 +29,7 @@ public class CalculatorPanel extends DefaultRightPanel {
 		
 		// topPanel
 		JLabel btnCalTitle;
-		btnCalTitle = new JLabel("POS±â Çö±İ °ü¸®");
+		btnCalTitle = new JLabel("POSê¸° í˜„ê¸ˆ ê´€ë¦¬");
 		btnCalTitle.setBounds(300, 36, 347, 41);
 
 		topPanel.add(btnCalTitle);
@@ -37,11 +37,11 @@ public class CalculatorPanel extends DefaultRightPanel {
 		JLabel jl1, jl2, jl4;
 		RoundedButton jb1;
 		jl1 = new JLabel();
-		jl2 = new JLabel("ÇöÀç Çö±İ ÀÜ¾×");
+		jl2 = new JLabel("í˜„ì¬ í˜„ê¸ˆ ì”ì•¡");
 		jl3 = new JLabel("");
-		jl4 = new JLabel("¿ø");
+		jl4 = new JLabel("ì›");
 		jtf = new JTextField("");
-		jb1 = new RoundedButton("Ãß°¡");
+		jb1 = new RoundedButton("ì¶”ê°€");
 		updateCash();
 		jl1.setBounds(99, 138, 376, 153);
 		jl2.setBounds(160, 164, 253, 39);
@@ -50,7 +50,7 @@ public class CalculatorPanel extends DefaultRightPanel {
 		jl4.setBounds(353, 311, 30, 30);
 		jb1.setBounds(401, 304, 74, 43);
 
-		// jtf ¹®ÀÚ ÀÔ·Â ÀÌº¥Æ®
+		// jtf ë¬¸ì ì…ë ¥ ì´ë²¤íŠ¸
 		jtf.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -58,18 +58,18 @@ public class CalculatorPanel extends DefaultRightPanel {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// ¹é½ºÆäÀÌ½º »ç¿ë½Ã °Ë»çÇÏÁö ¾Ê°í Á¾·á
+				// ë°±ìŠ¤í˜ì´ìŠ¤ ì‚¬ìš©ì‹œ ê²€ì‚¬í•˜ì§€ ì•Šê³  ì¢…ë£Œ
 				if (e.getKeyChar() == '')
 					return;
 				int jtfLen = jtf.getText().length();
 				String pattern;
 				String val = String.valueOf(e.getKeyChar());
-				if (jtfLen == 1) { // Ã¹¹øÂ° ¹®ÀÚÀÏ ¶§ ¼ıÀÚ³ª - ÀÔ·Â °¡´É
+				if (jtfLen == 1) { // ì²«ë²ˆì§¸ ë¬¸ìì¼ ë•Œ ìˆ«ìë‚˜ - ì…ë ¥ ê°€ëŠ¥
 					pattern = "^[0-9]|-$";
-				} else { // µÎ¹øÂ° ¹®ÀÚºÎÅÍ ¼ıÀÚ¸¸ ÀÔ·Â°¡´É
+				} else { // ë‘ë²ˆì§¸ ë¬¸ìë¶€í„° ìˆ«ìë§Œ ì…ë ¥ê°€ëŠ¥
 					pattern = "^[0-9]";
 				}
-				// Á¶°Ç¿¡ ¸ÂÁö ¾ÊÀ» ½Ã ÀÔ·ÂÇÑ ÅØ½ºÆ®¸¦ »èÁ¦
+				// ì¡°ê±´ì— ë§ì§€ ì•Šì„ ì‹œ ì…ë ¥í•œ í…ìŠ¤íŠ¸ë¥¼ ì‚­ì œ
 				if (!Pattern.matches(pattern, val)) {
 					jtf.setText(jtf.getText().substring(0, jtf.getText().length() - 1));
 				}
@@ -81,10 +81,10 @@ public class CalculatorPanel extends DefaultRightPanel {
 		});
 
 		jb1.addActionListener((e) -> {
-			// jll3¿¡¼­ ¼ıÀÚ¸¸ ÃßÃâ
+			// jll3ì—ì„œ ìˆ«ìë§Œ ì¶”ì¶œ
 			String cashStr = jl3.getText().replaceAll("[^0-9]", "");
 			int addCash = Integer.parseInt(cashStr) + Integer.parseInt(jtf.getText());
-			// DB ¾÷µ¥ÀÌÆ®
+			// DB ì—…ë°ì´íŠ¸
 			Main.dbc.cash = new Cash(1234, addCash);
 			Main.dbc.stateCash = Main.dbc.UPDATE;
 		});
@@ -187,7 +187,7 @@ public class CalculatorPanel extends DefaultRightPanel {
 		addComponents(calPanel, btnNum1, btnNum2, btnNum3, btnNum4, btnNum5, btnNum6, btnNum7, btnNum8, btnNum9,
 				btnNum0, btnEqual, btnDel, btnAdd, btnSub, btnMul, btnDiv, jtfResult);
 
-		// ¹Ø¿¡ ±ò¸®´Â ÄÄÆ÷³ÍÆ®´Â À§¿¡ Ç¥½ÃµÇ´Â ÄÄÆ÷³ÍÆ®º¸´Ù ³ªÁß¿¡ Ãß°¡ÇØ¾ß ÇÔ.
+		// ë°‘ì— ê¹”ë¦¬ëŠ” ì»´í¬ë„ŒíŠ¸ëŠ” ìœ„ì— í‘œì‹œë˜ëŠ” ì»´í¬ë„ŒíŠ¸ë³´ë‹¤ ë‚˜ì¤‘ì— ì¶”ê°€í•´ì•¼ í•¨.
 		addComponents(centerPanel, jl2, jl3, jl4, jtf, jb1, calPanel, jl1);
 
 		// bottomPanel
@@ -195,33 +195,33 @@ public class CalculatorPanel extends DefaultRightPanel {
 		// add panels
 		addComponents(this, topPanel, centerPanel, bottomPanel);
 		
-		/**µğÀÚÀÎ ½ÃÀÛ-------------------------------**/
-		//POS±â Çö±İ °ü¸® ·¹ÀÌºí ÆùÆ® ÁöÁ¤
+		/**ë””ìì¸ ì‹œì‘-------------------------------**/
+		//POSê¸° í˜„ê¸ˆ ê´€ë¦¬ ë ˆì´ë¸” í°íŠ¸ ì§€ì •
 		btnCalTitle.setFont(new Font("", Font.PLAIN, 40));
 		
-		//"ÇöÀç Çö±İ ÀÜ¾×", ___¿ø µé¾îÀÖ´Â ³×¸ğ ¶óÀÎ ÁöÁ¤, ¹è°æ»ö ÁöÁ¤
+		//"í˜„ì¬ í˜„ê¸ˆ ì”ì•¡", ___ì› ë“¤ì–´ìˆëŠ” ë„¤ëª¨ ë¼ì¸ ì§€ì •, ë°°ê²½ìƒ‰ ì§€ì •
 		jl1.setBorder(new LineBorder(Color.gray, 1, true));
 		jl1.setOpaque(true);
 		jl1.setBackground(Color.WHITE);
 		
-		//ÀÔ·Â¹Ş´Â JTextField ¹è°æ»ö, Á¤·Ä ÁöÁ¤
+		//ì…ë ¥ë°›ëŠ” JTextField ë°°ê²½ìƒ‰, ì •ë ¬ ì§€ì •
 		jtf.setBackground(Color.WHITE);
 		jtf.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		//Ãß°¡ ¹öÆ° ¹è°æ»ö ÁöÁ¤
+		//ì¶”ê°€ ë²„íŠ¼ ë°°ê²½ìƒ‰ ì§€ì •
 		jb1.setBackground(Color.LIGHT_GRAY);
 		
-		//·¹ÀÌºíµé ÆùÆ® ÁöÁ¤
+		//ë ˆì´ë¸”ë“¤ í°íŠ¸ ì§€ì •
 		jl2.setFont(new Font("", Font.PLAIN, 38));
 		jl3.setFont(new Font("", Font.PLAIN, 38));
 		jl4.setFont(new Font("", Font.PLAIN, 29));
 		jtf.setFont(new Font("", Font.PLAIN, 29));
 		jb1.setFont(new Font("", Font.PLAIN, 20));
 		
-		//°è»ê±â ¹öÆ° ¹è°æ»ö Á¤ÀÇ
+		//ê³„ì‚°ê¸° ë²„íŠ¼ ë°°ê²½ìƒ‰ ì •ì˜
 		Color backgroundColor = new Color(59,59,59);
 		
-		//°è»ê±â ¹öÆ° ¹è°æ»ö ÁöÁ¤
+		//ê³„ì‚°ê¸° ë²„íŠ¼ ë°°ê²½ìƒ‰ ì§€ì •
 		btnNum1.setBackground(backgroundColor);
 		btnNum2.setBackground(backgroundColor);
 		btnNum3.setBackground(backgroundColor);
@@ -239,7 +239,7 @@ public class CalculatorPanel extends DefaultRightPanel {
 		btnMul.setBackground(backgroundColor);
 		btnDiv.setBackground(backgroundColor);
 		
-		//°è»ê±â ¹öÆ° ÆùÆ®»ö ÁöÁ¤
+		//ê³„ì‚°ê¸° ë²„íŠ¼ í°íŠ¸ìƒ‰ ì§€ì •
 		btnNum1.setForeground(Color.white);
 		btnNum2.setForeground(Color.white);
 		btnNum3.setForeground(Color.white);
@@ -257,14 +257,14 @@ public class CalculatorPanel extends DefaultRightPanel {
 		btnMul.setForeground(Color.white);
 		btnDiv.setForeground(Color.white);
 		
-		//°è»ê±â ¹öÆ° ÆùÆ® ÁöÁ¤
+		//ê³„ì‚°ê¸° ë²„íŠ¼ í°íŠ¸ ì§€ì •
 		setFonts(new Font("", Font.PLAIN, 29), btnNum1, btnNum2, btnNum3, btnNum4, btnNum5, btnNum6, btnNum7, btnNum8,
 				btnNum9, btnNum0, btnEqual, btnAdd, btnSub, btnMul, btnDiv, jtfResult);
 		btnDel.setFont(new Font("", Font.PLAIN, 17));
 		
-		//°è»ê±â ÀÔ·Â¹ŞÀº °ª Á¤·Ä ÁöÁ¤
+		//ê³„ì‚°ê¸° ì…ë ¥ë°›ì€ ê°’ ì •ë ¬ ì§€ì •
 		jtfResult.setHorizontalAlignment(SwingConstants.RIGHT);
-		/**µğÀÚÀÎ ³¡----------------------------------**/
+		/**ë””ìì¸ ë----------------------------------**/
 	}
 
 	private void updateResult() {
@@ -281,14 +281,14 @@ public class CalculatorPanel extends DefaultRightPanel {
 	StringBuilder sb = new StringBuilder();
 
 	private void appendFormula(String f) {
-		// ¿¬»êÀÚ°¡ µé¾î¿ÔÀ» ¶§
+		// ì—°ì‚°ìê°€ ë“¤ì–´ì™”ì„ ë•Œ
 		if (f.equals("+") || f.equals("-") || f.equals("*") || f.equals("/")) {
-			// ÀÌÀü¿¡ µé¾î¿Â ¼ö½ÄÀÌ ¾øÀ» ¶§
+			// ì´ì „ì— ë“¤ì–´ì˜¨ ìˆ˜ì‹ì´ ì—†ì„ ë•Œ
 			if (formula.size() == 0) {
-				// ÀÌÀü¿¡ ÀÔ·ÂµÈ ¼ıÀÚ°¡ ¾øÀ» ¶§ ¿¬»êÀÚ ÀÔ·Â ¹ŞÁö ¾ÊÀ½
+				// ì´ì „ì— ì…ë ¥ëœ ìˆ«ìê°€ ì—†ì„ ë•Œ ì—°ì‚°ì ì…ë ¥ ë°›ì§€ ì•ŠìŒ
 				if (sb.toString().equals("")) {
 					return;
-				} else {// ÀÌÀü¿¡ ÀÔ·ÂµÈ ¼ıÀÚ°¡ ÀÖÀ» ¶§ ÀÌÀü¿¡ ÀÔ·ÂµÈ ¼ıÀÚ Ãß°¡ ÈÄ ¿¬»êÀÚ Ãß°¡
+				} else {// ì´ì „ì— ì…ë ¥ëœ ìˆ«ìê°€ ìˆì„ ë•Œ ì´ì „ì— ì…ë ¥ëœ ìˆ«ì ì¶”ê°€ í›„ ì—°ì‚°ì ì¶”ê°€
 					formula.add(sb.toString());
 					formula.add(f);
 					sb.delete(0, sb.length());
@@ -296,20 +296,20 @@ public class CalculatorPanel extends DefaultRightPanel {
 					return;
 				}
 			}
-			// ÀÌÀü¿¡ µé¾î¿Â ¿Ï¼ºµÈ ¼ö½ÄÀÌ ÀÖÀ» ¶§
-			if (!sb.toString().equals("")) {// ÀÌÀü¿¡ µé¾î¿Â ¼ıÀÚ°¡ ÀÖÀ» ¶§ ÀÌÀü¿¡ ÀÔ·ÂµÈ ¼ıÀÚ Ãß°¡ ÈÄ ¿¬»êÀÚ Ãß°¡
+			// ì´ì „ì— ë“¤ì–´ì˜¨ ì™„ì„±ëœ ìˆ˜ì‹ì´ ìˆì„ ë•Œ
+			if (!sb.toString().equals("")) {// ì´ì „ì— ë“¤ì–´ì˜¨ ìˆ«ìê°€ ìˆì„ ë•Œ ì´ì „ì— ì…ë ¥ëœ ìˆ«ì ì¶”ê°€ í›„ ì—°ì‚°ì ì¶”ê°€
 				formula.add(sb.toString());
 				formula.add(f);
 				sb.delete(0, sb.length());
 				updateResult();
 				return;
-			} else {// ÀÌÀü¿¡ µé¾î¿Â ¼ıÀÚ°¡ ¾øÀ» ¶§ ÀÌÀü¿¡ ÀÔ·ÂµÈ ¿¬»êÀÚ º¯°æ
+			} else {// ì´ì „ì— ë“¤ì–´ì˜¨ ìˆ«ìê°€ ì—†ì„ ë•Œ ì´ì „ì— ì…ë ¥ëœ ì—°ì‚°ì ë³€ê²½
 				formula.set(formula.size() - 1, f);
 				updateResult();
 				return;
 			}
 		}
-		// ¿¬»êÀÚ°¡ µé¾î¿ÀÁö ¾Ê¾ÒÀ»¶§ ¼ıÀÚ °è¼Ó Ãß°¡
+		// ì—°ì‚°ìê°€ ë“¤ì–´ì˜¤ì§€ ì•Šì•˜ì„ë•Œ ìˆ«ì ê³„ì† ì¶”ê°€
 		sb.append(f);
 		updateResult();
 		return;
@@ -325,19 +325,19 @@ public class CalculatorPanel extends DefaultRightPanel {
 	}
 
 	private void resultFormula() {
-		// ¼ö½Ä¿¡ ¼ıÀÚ¸¸ µé¾î¿Í ÀÖÀ» ¶§ °è»êÇÏÁö ¾Ê°í ³¡³¿.
+		// ìˆ˜ì‹ì— ìˆ«ìë§Œ ë“¤ì–´ì™€ ìˆì„ ë•Œ ê³„ì‚°í•˜ì§€ ì•Šê³  ëëƒ„.
 		if (formula.size() == 0)
 			return;
-		// ¼ö½Ä ¸¶Áö¸·¿¡ ¿¬»êÀÚ°¡ ÀÔ·ÂµÇ¾úÀ» ½Ã °è»êÇÏÁö ¾Ê°í ³¡³¿.
+		// ìˆ˜ì‹ ë§ˆì§€ë§‰ì— ì—°ì‚°ìê°€ ì…ë ¥ë˜ì—ˆì„ ì‹œ ê³„ì‚°í•˜ì§€ ì•Šê³  ëëƒ„.
 		String lastFormula = formula.get(formula.size() - 1);
 		if (sb.length() == 0 && (lastFormula.equals("+") || lastFormula.equals("-") || lastFormula.equals("*")
 				|| lastFormula.equals("/")))
 			return;
-		// ¼ö½Ä ¸¶Áö¸·¿¡ µé¾î¿Â ¼ıÀÚ¸¦ ½ºÅÃ¿¡ Ãß°¡
+		// ìˆ˜ì‹ ë§ˆì§€ë§‰ì— ë“¤ì–´ì˜¨ ìˆ«ìë¥¼ ìŠ¤íƒì— ì¶”ê°€
 		formula.add(sb.toString());
 		sb.delete(0, sb.length());
 
-		// ÈÄÀ§ Ç¥±â¹ı ÁØºñ
+		// í›„ìœ„ í‘œê¸°ë²• ì¤€ë¹„
 		for (int i = 0; i < formula.size(); i++) {
 			String tmp = formula.get(i);
 			if (tmp.equals("+") || tmp.equals("-") || tmp.equals("*") || tmp.equals("/")) {
@@ -355,12 +355,12 @@ public class CalculatorPanel extends DefaultRightPanel {
 				postfix.add(tmp);
 			}
 		}
-		// ³²Àº ¿¬»êÀÚ ÀÔ·Â
+		// ë‚¨ì€ ì—°ì‚°ì ì…ë ¥
 		int opStackSize = opStack.size();
 		for (int i = 0; i < opStackSize; i++) {
 			postfix.add(opStack.pop());
 		}
-		// ÈÄÀ§ Ç¥±â¹ı »ç¿ë
+		// í›„ìœ„ í‘œê¸°ë²• ì‚¬ìš©
 		for (int i = 2; i < postfix.size(); i++) {
 			double num1;
 			double num2;
@@ -368,7 +368,7 @@ public class CalculatorPanel extends DefaultRightPanel {
 			case "+":
 				num1 = Double.parseDouble(postfix.get(i - 2));
 				num2 = Double.parseDouble(postfix.get(i - 1));
-				// 2°³ÀÇ ¼ıÀÚÀÇ 1°³ÀÇ ¿¬»êÀÚ·Î ¿¬»êÈÄ 1°³ÀÇ °á°ú¸¦ ¹İÈ¯, ArrayList °ø°£ 3°³Áß 1°³¸¸ ³²±è
+				// 2ê°œì˜ ìˆ«ìì˜ 1ê°œì˜ ì—°ì‚°ìë¡œ ì—°ì‚°í›„ 1ê°œì˜ ê²°ê³¼ë¥¼ ë°˜í™˜, ArrayList ê³µê°„ 3ê°œì¤‘ 1ê°œë§Œ ë‚¨ê¹€
 				postfix.set(i, Double.toString((num1 + num2)));
 				postfix.remove(--i);
 				postfix.remove(--i);
@@ -397,14 +397,14 @@ public class CalculatorPanel extends DefaultRightPanel {
 			}
 		}
 
-		// ¼ö½Ä ÃÊ±âÈ­
+		// ìˆ˜ì‹ ì´ˆê¸°í™”
 		formula.clear();
-		// °è»êµÈ ¼ö½Ä ÀÔ·Â
+		// ê³„ì‚°ëœ ìˆ˜ì‹ ì…ë ¥
 		DecimalFormat df = new DecimalFormat("#.###");
 		appendFormula(df.format(Double.parseDouble(postfix.get(0))));
-		// °è»êµÈ ¼ö½Ä È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+		// ê³„ì‚°ëœ ìˆ˜ì‹ í™”ë©´ì— ì—…ë°ì´íŠ¸
 		updateResult();
-		// ½ºÅÃ ÃÊ±âÈ­
+		// ìŠ¤íƒ ì´ˆê¸°í™”
 		postfix.clear();
 
 	}
